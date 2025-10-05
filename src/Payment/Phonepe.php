@@ -31,14 +31,20 @@ class Phonepe extends Payment
      */
     public function getImage()
     {
-        $url = $this->getConfigData('image');
+        $imagePath = $this->getConfigData('image');
 
-        if ($url) {
-            return Storage::url($url);
+        // If custom image is uploaded via admin (stored in storage)
+        if ($imagePath && \Illuminate\Support\Str::startsWith($imagePath, 'payment_methods/')) {
+            return Storage::url($imagePath);
         }
 
-        // Fallback to default PhonePe logo
-        return asset('vendor/wontonee/phonepe/images/phonepe-logo.png');
+        // If image path is set in config (vendor published asset)
+        if ($imagePath) {
+            return asset($imagePath);
+        }
+
+        // Fallback to default PhonePe icon (from published assets)
+        return asset('vendor/wontonee/phonepe/images/phone.png');
     }
 
     /**
