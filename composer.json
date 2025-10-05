@@ -1,0 +1,30 @@
+{
+    "name": "wontonee/phonepe",
+    "description": "PhonePe Payment Gateway for Bagisto - Professional integration with OAuth 2.0 authentication",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Wontonee",
+            "email": "dev@wontonee.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Wontonee\\Phonepe\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wontonee\\Phonepe\\Providers\\PhonepeServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.1|^8.2",
+        "illuminate/support": "^10.0|^11.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
