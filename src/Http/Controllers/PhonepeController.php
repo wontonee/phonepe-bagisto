@@ -9,6 +9,7 @@ use Webkul\Checkout\Facades\Cart;
 use Webkul\Sales\Repositories\OrderRepository;
 use Webkul\Sales\Repositories\InvoiceRepository;
 use Wontonee\Phonepe\Services\PhonepeService;
+use Wontonee\Phonepe\Services\LicenseService;
 use Webkul\Checkout\Http\Requests\OrderRequest;
 use Webkul\Checkout\Repositories\CartRepository;
 use Webkul\Sales\Transformers\OrderResource;
@@ -27,6 +28,13 @@ class PhonepeController extends Controller
      * @var PhonepeService
      */
     protected $PhonepeService;
+
+    /**
+     * License service instance
+     *
+     * @var LicenseService
+     */
+    protected $licenseService;
 
     /**
      * Order repository instance
@@ -53,6 +61,7 @@ class PhonepeController extends Controller
      * Create a new controller instance.
      *
      * @param PhonepeService $PhonepeService
+     * @param LicenseService $licenseService
      * @param OrderRepository $orderRepository
      * @param InvoiceRepository $invoiceRepository
      * @param CartRepository $cartRepository
@@ -60,11 +69,13 @@ class PhonepeController extends Controller
      */
     public function __construct(
         PhonepeService $PhonepeService,
+        LicenseService $licenseService,
         OrderRepository $orderRepository,
         InvoiceRepository $invoiceRepository,
         CartRepository $cartRepository
     ) {
         $this->PhonepeService = $PhonepeService;
+        $this->licenseService = $licenseService;
         $this->orderRepository = $orderRepository;
         $this->invoiceRepository = $invoiceRepository;
         $this->cartRepository = $cartRepository;
@@ -77,7 +88,16 @@ class PhonepeController extends Controller
      */
     public function redirect()
     {
+
         try {
+            // Validate license before processing payment
+            if (!$this->licenseService->isValid()) {
+                Log::channel('phonepe')->error('Payment blocked - Invalid license');
+                
+                return redirect()->route('shop.checkout.cart.index')
+                    ->with('error', 'PhonePe payment gateway is not available. Please contact support.');
+            }
+
             $cart = Cart::getCart();
 
             if (!$cart) {
@@ -160,6 +180,15 @@ class PhonepeController extends Controller
     public function callback(Request $request)
     {
         try {
+            // Validate license before processing callback
+            if (!$this->licenseService->isValid()) {
+                Log::channel('phonepe')->error('Callback blocked - Invalid license');
+                
+                session()->flash('error', 'PhonePe payment gateway is not available. Please contact support.');
+                
+                return redirect()->route('shop.checkout.cart.index');
+            }
+
             // Get stored session data
             $cartId = session('phonepe_cart_id');
             $merchantOrderId = session('phonepe_merchant_order_id');
@@ -315,7 +344,12 @@ class PhonepeController extends Controller
      */
     public function cancel()
     {
-        Log::channel('phonepe')->info('Payment cancelled by user');
+        // Validate license (log only, don't block cancellation)
+        if (!$this->licenseService->isValid()) {
+            Log::channel('phonepe')->warning('Cancel request with invalid license');
+        } else {
+            Log::channel('phonepe')->info('Payment cancelled by user');
+        }
 
         // Clear session data
         session()->forget([

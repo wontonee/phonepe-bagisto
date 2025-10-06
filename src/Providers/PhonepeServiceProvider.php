@@ -16,6 +16,9 @@ class PhonepeServiceProvider extends ServiceProvider
         
         // Register PhonePe service as singleton
         $this->app->singleton(\Wontonee\Phonepe\Services\PhonepeService::class);
+        
+        // Register License service as singleton
+        $this->app->singleton(\Wontonee\Phonepe\Services\LicenseService::class);
     }
 
     /**

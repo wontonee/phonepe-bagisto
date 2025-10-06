@@ -54,6 +54,12 @@ class Phonepe extends Payment
      */
     public function isAvailable()
     {
+        // Check license first
+        $licenseService = app(\Wontonee\Phonepe\Services\LicenseService::class);
+        if (!$licenseService->isValid()) {
+            return false;
+        }
+
         // Check if required credentials are configured
         $clientId = $this->getConfigData('client_id');
         $clientSecret = $this->getConfigData('client_secret');

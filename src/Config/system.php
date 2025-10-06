@@ -4,7 +4,7 @@ return [
     [
         'key'    => 'sales.payment_methods.phonepe',
         'name'   => 'PhonePe',
-        'info'   => 'Professional PhonePe Payment Gateway for Bagisto with OAuth 2.0 Authentication. <div style="margin-top: 10px; padding: 15px; background: #f8f9ff; border: 1px solid #e3f2fd; border-radius: 8px;"><div style="display: flex; align-items: center; margin-bottom: 8px;"><span style="color: #5f259f; font-weight: 600; font-size: 14px;">🚀 PhonePe Integration</span></div><p style="margin: 0 0 10px 0; color: #424242; font-size: 13px; line-height: 1.4;">Secure payment processing with OAuth 2.0 token-based authentication. Supports UPI, Cards, Net Banking, and Wallets.</p><div style="margin-top: 10px; font-size: 12px; color: #666;"><span style="color: #4caf50;">✓</span> OAuth 2.0 Authentication</div><div style="margin-top: 4px; font-size: 12px; color: #666;"><span style="color: #4caf50;">✓</span> Multiple Payment Methods</div><div style="margin-top: 4px; font-size: 12px; color: #666;"><span style="color: #4caf50;">✓</span> Sandbox & Production Support</div><div style="margin-top: 12px; padding: 10px; background: #fff8e1; border: 1px solid #ffc107; border-radius: 6px; font-size: 12px;"><span style="color: #e65100; font-weight: 600;">⚠️ Important:</span> <span style="color: #424242;">Amount must be in paisa (₹10 = 1000 paisa). Minimum amount: ₹1 (100 paisa).</span></div></div>',
+        'info'   => 'Professional PhonePe Payment Gateway for Bagisto with OAuth 2.0 Authentication. <div style="margin-top: 10px; padding: 15px; background: #f8f9ff; border: 1px solid #e3f2fd; border-radius: 8px;"><div style="display: flex; align-items: center; margin-bottom: 8px;"><span style="color: #5f259f; font-weight: 600; font-size: 14px;">🚀 PhonePe Integration</span></div><p style="margin: 0 0 10px 0; color: #424242; font-size: 13px; line-height: 1.4;">Secure payment processing with OAuth 2.0 token-based authentication. Supports UPI, Cards, Net Banking, and Wallets.</p><div style="margin-top: 10px; font-size: 12px; color: #666;"><span style="color: #4caf50;">✓</span> OAuth 2.0 Authentication</div><div style="margin-top: 4px; font-size: 12px; color: #666;"><span style="color: #4caf50;">✓</span> Multiple Payment Methods</div><div style="margin-top: 4px; font-size: 12px; color: #666;"><span style="color: #4caf50;">✓</span> Sandbox & Production Support</div><div style="margin-top: 12px; padding: 10px; background: #fff8e1; border: 1px solid #ffc107; border-radius: 6px; font-size: 12px;"><span style="color: #e65100; font-weight: 600;">⚠️ Important:</span> <span style="color: #424242;">Amount must be in paisa (₹10 = 1000 paisa). Minimum amount: ₹1 (100 paisa).</span></div><div style="margin-top: 15px; text-align: center;"><a href="https://myapps.wontonee.com" target="_blank" style="display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #5f259f 0%, #7c3aad 100%); color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; box-shadow: 0 2px 8px rgba(95, 37, 159, 0.3); transition: all 0.3s ease;">🔑 Get Your License Key</a></div></div>',
         'sort'   => 6,
         'fields' => [
             [
@@ -32,6 +32,23 @@ return [
                 'locale_based'  => false,
                 'validation'    => 'mimes:bmp,jpeg,jpg,png,webp',
                 'info'          => 'Upload an icon to display in the payment methods selection page (recommended size: 100x50px)',
+            ],
+            [
+                'name'          => 'license_key',
+                'title'         => '🔑 License Key',
+                'type'          => 'text',
+                'validation'    => 'required',
+                'channel_based' => false,
+                'locale_based'  => false,
+                'info'          => '⚠️ Required: Enter your 16-character license key. Example: 50790182FD6CA0FC - Get your license from: https://wontonee.com/my-licenses',
+            ],
+            [
+                'name'          => 'domain',
+                'title'         => '🌐 Domain (Optional)',
+                'type'          => 'text',
+                'channel_based' => false,
+                'locale_based'  => false,
+                'info'          => 'Leave empty for 3-day trial mode. Enter your domain (e.g., shop.example.com) for licensed use.',
             ],
             [
                 'name'          => 'environment',

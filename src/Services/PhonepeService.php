@@ -30,10 +30,10 @@ class PhonepeService
      */
     public function getAccessToken()
     {
-        $environment = core()->getConfigData('sales.payment_methods.Phonepe.environment') ?? 'sandbox';
-        $clientId = core()->getConfigData('sales.payment_methods.Phonepe.client_id');
-        $clientSecret = core()->getConfigData('sales.payment_methods.Phonepe.client_secret');
-        $clientVersion = core()->getConfigData('sales.payment_methods.Phonepe.client_version') ?? '1';
+        $environment = core()->getConfigData('sales.payment_methods.phonepe.environment') ?? 'sandbox';
+        $clientId = core()->getConfigData('sales.payment_methods.phonepe.client_id');
+        $clientSecret = core()->getConfigData('sales.payment_methods.phonepe.client_secret');
+        $clientVersion = core()->getConfigData('sales.payment_methods.phonepe.client_version') ?? '1';
 
         if (!$clientId || !$clientSecret) {
             throw new Exception('PhonePe credentials not configured');
@@ -90,7 +90,7 @@ class PhonepeService
     public function createPayment(array $orderData)
     {
         $accessToken = $this->getAccessToken();
-        $environment = core()->getConfigData('sales.payment_methods.Phonepe.environment') ?? 'sandbox';
+        $environment = core()->getConfigData('sales.payment_methods.phonepe.environment') ?? 'sandbox';
         
         $paymentUrl = $environment === 'production' 
             ? self::PRODUCTION_PAYMENT_URL 
@@ -142,7 +142,7 @@ class PhonepeService
     public function checkPaymentStatus(string $merchantOrderId)
     {
         $accessToken = $this->getAccessToken();
-        $environment = core()->getConfigData('sales.payment_methods.Phonepe.environment') ?? 'sandbox';
+        $environment = core()->getConfigData('sales.payment_methods.phonepe.environment') ?? 'sandbox';
         
         // PhonePe requires merchant order ID BEFORE /status in the endpoint URL
         $statusUrl = $environment === 'production' 
