@@ -41,7 +41,7 @@ Professional PhonePe payment gateway integration for Bagisto e-commerce platform
 ### Step 1: Install via Composer
 
 ```bash
-composer require wontonee/Phonepe
+composer require wontonee/phonepe
 ```
 
 ### Step 2: Publish Assets
