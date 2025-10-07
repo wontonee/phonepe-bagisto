@@ -58,19 +58,7 @@ class LicenseService
             ];
         }
 
-        // Check cache first (unless force refresh)
-        if (!$forceRefresh) {
-            $cached = Cache::get($this->getCacheKey($licenseKey));
-            if ($cached && isset($cached['valid'])) {
-                Log::channel('phonepe')->info('License validation from cache', [
-                    'license' => $this->maskLicense($licenseKey),
-                    'valid' => $cached['valid'],
-                ]);
-                return $cached;
-            }
-        }
-
-        // Remote validation
+        // Always validate remotely (no caching)
         return $this->validateRemote($licenseKey);
     }
 
@@ -165,15 +153,6 @@ class LicenseService
                     'code' => $isValid ? 'VALID' : 'INVALID_LICENSE',
                     'validated_at' => now()->toDateTimeString(),
                 ];
-
-                // Cache the result
-                if ($result['valid']) {
-                    Cache::put(
-                        $this->getCacheKey($licenseKey),
-                        $result,
-                        self::CACHE_DURATION
-                    );
-                }
 
                 Log::channel('phonepe')->info('License validation response', [
                     'license' => $this->maskLicense($licenseKey),
