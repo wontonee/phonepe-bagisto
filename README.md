@@ -47,7 +47,7 @@ composer require wontonee/phonepe
 ### Step 2: Publish Assets
 
 ```bash
-php artisan vendor:publish --tag=Phonepe-assets
+php artisan vendor:publish --tag=phonepe-assets
 ```
 
 ### Step 3: Clear Cache

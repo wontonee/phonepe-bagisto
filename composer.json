@@ -1,7 +1,6 @@
 {
     "name": "wontonee/phonepe",
     "description": "PhonePe Payment Gateway for Bagisto - Professional integration with OAuth 2.0 authentication",
-    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "authors": [
