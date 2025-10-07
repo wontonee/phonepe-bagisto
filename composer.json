@@ -19,11 +19,21 @@
         "laravel": {
             "providers": [
                 "Wontonee\\Phonepe\\Providers\\PhonepeServiceProvider"
-            ]
+            ],
+            "aliases": {}
         }
     },
+    "scripts": {
+        "post-install-cmd": [
+            "@php artisan vendor:publish --tag=phonepe-config --force",
+            "@php artisan vendor:publish --tag=phonepe-views --force"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=phonepe-config --force",
+            "@php artisan vendor:publish --tag=phonepe-views --force"
+        ]
+    },
     "require": {
-        "php": "^8.1|^8.2",
-        "illuminate/support": "^10.0|^11.0"
+        "php": "^8.1|^8.2"
     }
 }
